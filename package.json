@@ -1,6 +1,6 @@
 {
   "name": "invest-nodejs-grpc-sdk",
-  "version": "01.001.00",
+  "version": "01.002.00",
   "description": "",
   "main": "dist/sdk.js",
   "scripts": {
