@@ -1,0 +1,41 @@
+{
+  "name": "invest-nodejs-grpc-sdk",
+  "version": "01.001.00",
+  "description": "",
+  "main": "test.ts",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "lint": "eslint \"src/**/{*.ts,*.tsx}\"",
+    "start": "tsc && node dist/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/test.ts"
+  },
+  "keywords": [
+    "trading",
+    "investment",
+    "strategy",
+    "bot"
+  ],
+  "author": "mtvkand",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.5.10",
+    "long": "^5.2.0",
+    "nice-grpc": "^1.1.0",
+    "protobufjs": "^6.11.2"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/google-protobuf": "^3.15.5",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "grpc-tools": "^1.11.2",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.1",
+    "ts-node": "^10.7.0",
+    "ts-proto": "^1.110.2",
+    "typescript": "^4.6.3"
+  }
+}
