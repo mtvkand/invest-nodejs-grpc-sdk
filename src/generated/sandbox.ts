@@ -1,6 +1,5 @@
 /* eslint-disable */
-//@ts-ignore
-import * as Long from 'long';
+import Long from 'long';
 import * as _m0 from 'protobufjs/minimal';
 import { MoneyValue } from './common';
 import { GetAccountsRequest, GetAccountsResponse } from './users';
@@ -461,8 +460,6 @@ export type DeepPartial<T> = T extends Builtin
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
