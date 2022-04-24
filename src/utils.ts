@@ -2,10 +2,10 @@ import { CallCredentials, ChannelCredentials, credentials, Metadata } from '@grp
 import { createChannel } from 'nice-grpc';
 import { APP_NAME } from './constants';
 
-export const createMetadata = (token: string): Metadata => {
+export const createMetadata = (token: string, appName?: string): Metadata => {
   const metadata = new Metadata();
   metadata.add('Authorization', `Bearer ${token}`);
-  metadata.add('x-app-name', APP_NAME);
+  metadata.add('x-app-name', appName || APP_NAME);
 
   return metadata;
 };

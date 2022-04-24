@@ -10,8 +10,8 @@ import { OrdersServiceDefinition, OrdersStreamServiceDefinition } from './genera
 import { SandboxServiceDefinition } from './generated/sandbox';
 import { responseMiddleware } from './middlewares/response';
 
-export const createSdk = (token: string) => {
-  const metadata = createMetadata(token);
+export const createSdk = (token: string, appName?: string) => {
+  const metadata = createMetadata(token, appName);
   const metadataCred = createMetadataCredentials(metadata);
   const sslCred = createSSLCredentials(metadataCred);
 
