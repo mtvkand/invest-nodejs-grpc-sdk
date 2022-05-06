@@ -8,16 +8,15 @@ import { MarketDataServiceDefinition, MarketDataStreamServiceDefinition } from '
 import { OperationsServiceDefinition } from './generated/operations';
 import { OrdersServiceDefinition, OrdersStreamServiceDefinition } from './generated/orders';
 import { SandboxServiceDefinition } from './generated/sandbox';
-import { responseMiddleware } from './middlewares/response';
+import { getMiddleware, TypeLoggerCb } from './middlewares/response';
 
-export const createSdk = (token: string, appName?: string) => {
+export const createSdk = (token: string, appName?: string, loggerCb?: TypeLoggerCb) => {
   const metadata = createMetadata(token, appName);
   const metadataCred = createMetadataCredentials(metadata);
   const sslCred = createSSLCredentials(metadataCred);
-
   const channel = makeChannel(API_URL, sslCred);
 
-  const clientFactory = createClientFactory().use(responseMiddleware);
+  const clientFactory = createClientFactory().use(getMiddleware(loggerCb));
 
   return {
     instruments: clientFactory.create(InstrumentsServiceDefinition, channel),
