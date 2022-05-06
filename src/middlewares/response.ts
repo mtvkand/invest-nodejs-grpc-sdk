@@ -15,10 +15,7 @@ export type TypeLoggerCb = (
 ) => void;
 
 export function getMiddleware(loggerCb?: TypeLoggerCb) {
-  return async function* <Request, Response>(
-    call: ClientMiddlewareCall<Request, Response>,
-    options: CallOptions,
-  ) {
+  return async function* <Request, Response>(call: ClientMiddlewareCall<Request, Response>, options: CallOptions) {
     const { path } = call.method;
 
     const errorMetadata: ErrorTrailers = {};
@@ -48,28 +45,18 @@ export function getMiddleware(loggerCb?: TypeLoggerCb) {
       const errStatus = isClientError ? errorStatus[error.details] : undefined;
 
       if (loggerCb) {
-        loggerCb(
-          errorMetadata,
-          error,
-          errStatus,
-        );
+        loggerCb(errorMetadata, error, errStatus);
       } else {
-
         if (isClientError) {
-          const errDescription = errStatus && errorStatus[error.details] &&
-            errorStatus[error.details].description;
+          const errDescription = errStatus && errorStatus[error.details] && errorStatus[error.details].description;
 
           console.log(errorMetadata);
-          console.log(
-            'Client error:',
-            `${Status[error.code]}(${error.details}) \n${errDescription || ''} \n${path}`,
-          );
+          console.log('Client error:', `${Status[error.code]}(${error.details}) \n${errDescription || ''} \n${path}`);
         } else {
           console.log(errorMetadata);
           console.log('Client error: ', `error: ${error}`, path);
         }
-
       }
     }
-  }
+  };
 }
