@@ -1,5 +1,5 @@
 import { ClientError, ClientMiddlewareCall, Status, CallOptions, Metadata } from 'nice-grpc';
-import { errorStatusDescribe } from '../errors/errorStatus';
+import { errorStatus, ErrorMessagesType } from '../errors/api_errors';
 
 type ErrorTrailers = {
   trackId?: string;
@@ -8,7 +8,11 @@ type ErrorTrailers = {
   rateLimitRemaining?: string;
   rateLimitReset?: string;
 };
-export type TypeLoggerCb = (errorMetadata: ErrorTrailers, error: ClientError | unknown) => void;
+export type TypeLoggerCb = (
+  errorMetadata: ErrorTrailers,
+  error: ClientError | unknown,
+  messages?: ErrorMessagesType,
+) => void;
 
 export function getMiddleware(loggerCb?: TypeLoggerCb) {
   return async function* <Request, Response>(
@@ -40,15 +44,25 @@ export function getMiddleware(loggerCb?: TypeLoggerCb) {
         return;
       }
     } catch (error) {
+      const isClientError = error instanceof ClientError;
+      const errStatus = isClientError ? errorStatus[error.details] : undefined;
+
       if (loggerCb) {
-        loggerCb(errorMetadata, error);
+        loggerCb(
+          errorMetadata,
+          error,
+          errStatus,
+        );
       } else {
 
-        if (error instanceof ClientError) {
+        if (isClientError) {
+          const errDescription = errStatus && errorStatus[error.details] &&
+            errorStatus[error.details].description;
+
           console.log(errorMetadata);
           console.log(
             'Client error:',
-            `${Status[error.code]}(${error.details}) \n${errorStatusDescribe.get(error.details)} \n${path}`,
+            `${Status[error.code]}(${error.details}) \n${errDescription || ''} \n${path}`,
           );
         } else {
           console.log(errorMetadata);
