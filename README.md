@@ -13,7 +13,7 @@ import { createSdk } from '../sdk';
 import { CandleInterval } from '../generated/marketdata';
 
 !(async function example() {
-   const { marketData } = createSdk('YOUR_TOKEN');
+   const { marketData } = createSdk('YOUR_TOKEN', 'YOUR_APP_NAME');
    
    const candles = await marketData.getCandles({
       figi: 'BBG0047315Y7',
